@@ -25,7 +25,9 @@ export default class CryptoScreen extends React.Component {
         <View>
           {currencyDetails.map(function (coin, i) {
               return (
-                <Text key={i}>{coin.name}: {coin.price}</Text>
+                <View>
+                  <Text key={i}>{coin.name}: {coin.price}</Text>
+                </View>
               )
             })
           }
@@ -35,8 +37,8 @@ export default class CryptoScreen extends React.Component {
 }
 
 const currencyDetails = [
-    { name: 'bitcoin', price: '$1'},
-    { name: 'etherium', price: '$2'},
+    { name: 'bitcoin', price: '$1', favourite: true},
+    { name: 'etherium', price: '$2', favourite: false},
   ];
 
 const styles = StyleSheet.create({
