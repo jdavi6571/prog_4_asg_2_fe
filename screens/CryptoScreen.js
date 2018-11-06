@@ -6,6 +6,10 @@ import {
   View,
 } from 'react-native';
 
+import { getList} from '../procedures/scrapeList.js';
+
+const currencyDetails = getList();
+
 export default class CryptoScreen extends React.Component {
   static navigationOptions = {
     title: 'List of Cryptocurrencies',
@@ -14,6 +18,7 @@ export default class CryptoScreen extends React.Component {
   render () {
     return (
       <ScrollView>
+        <Text id="test1">Hello!</Text>
         <Text> This is text on the CryptoScreen.</Text>
         <Text> {this._testFunction()} </Text>
       </ScrollView>
@@ -36,10 +41,7 @@ export default class CryptoScreen extends React.Component {
     }
 }
 
-const currencyDetails = [
-    { name: 'bitcoin', price: '$1', favourite: true},
-    { name: 'etherium', price: '$2', favourite: false},
-  ];
+currencyDetails
 
 const styles = StyleSheet.create({
   // styles for elements go here
