@@ -3,31 +3,24 @@
 */
 import * as f_handler from '../data/favourites.js';
 
-/*
-* Tests that will be performed
-1. No list exists (sends "No list" message)
-2.
-3.
-4.
-5.
-*/
-
 // Test that addToFavourites function returns successfully
 test('add to favourites list', () => {
   let key = 'test';
   let value = 'value'
 
-  expect(f_handler.addToFavourites(key, value)).toHaveReturned();
+  f_handler.addToFavourites(key, value);
+
+  expect(f_handler.addToFavourites()).toBe(true);
 });
 
-// Test that getSingleFavourite reutnrs successfully
+// Test that getSingleFavourite returns successfully (doesn't throw an error)
 test('find some token', () => {
   let key = 'test2';
   let value = 'value2'
 
-  f_handler.addToFavourites(key, value)
+  f_handler.addToFavourites(key, value);
 
-  expect(f_handler.getSingleFavourite(key)).toHaveReturned();
+  expect(f_handler.getSingleFavourite(key)).toBeDefined();
 });
 
 // Test that getSingleFavourite returns the desired value
@@ -46,13 +39,12 @@ test('remove from favourites list', () => {
   let value = 'value4'
 
   f_handler.addToFavourites(key, value);
-  expect(f_handler.getSingleFavourite(key)).toBe(value);
-  expect(f_handler.removeFromFavourites(key)).toHaveReturned();
+  expect(f_handler.removeFromFavourites(key)).toBe(true);
 });
 
 // Test that searching for unadded favourite returns nothing
 test('item not found in favourites list', () => {
   let key = 'test5';
 
-  expect(f_handler.getSingleFavourite(key)).toHaveReturned();
+  expect(f_handler.getSingleFavourite(key)).toBe(false);
 });
