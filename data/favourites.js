@@ -2,20 +2,19 @@
 
 import { AsyncStorage } from 'react-native';
 
-export function addToFavourites() {
-  _storeData = async () => {
-    try {
-      await AsyncStorage.setItem('1', 'bitcoin');
-    } catch (error) {
-      // Error saving data
-    }
-  }
+export function addToFavourites(key, value) {
 }
 
-export function removeFromFavourites() {
+export function getSingleFavourite(key) {
+  return "";
+}
 
+export function removeFromFavourites(key) {
+
+}
+
+export function checkIfInFavourites(key) {
 }
 
 export function getAllFavourites() {
-  return await AsyncStorage.getItem('1');
 }

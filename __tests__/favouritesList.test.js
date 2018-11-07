@@ -1,7 +1,7 @@
 /*
 * Tests created for TDD of building favourites list
 */
-import * as favouritesHandler from '../data/favourites.js';
+import * as f_handler from '../data/favourites.js';
 
 /*
 * Tests that will be performed
@@ -12,42 +12,47 @@ import * as favouritesHandler from '../data/favourites.js';
 5.
 */
 
-const list = [
-    { name: 'bitcoin', price: '$1', favourite: true},
-    { name: 'etherium', price: '$2', favourite: false},
-  ];
-
-const favouritesList = [
-    'bitcoin'
-];
-
-
-test('list does not exist', () => {
-
-});
-
-test('list exists', () => {
-
-
-  expect(list.length).toBeGreaterThan(0);
-});
-
+// Test that addToFavourites function returns successfully
 test('add to favourites list', () => {
+  let key = 'test';
+  let value = 'value'
 
-  expect().toBe();
+  expect(f_handler.addToFavourites(key, value)).toHaveReturned();
 });
 
+// Test that getSingleFavourite reutnrs successfully
+test('find some token', () => {
+  let key = 'test2';
+  let value = 'value2'
+
+  f_handler.addToFavourites(key, value)
+
+  expect(f_handler.getSingleFavourite(key)).toHaveReturned();
+});
+
+// Test that getSingleFavourite returns the desired value
+test('find item in favourites list', () => {
+  let key = 'test3';
+  let value = 'value3'
+
+  f_handler.addToFavourites(key, value)
+
+  expect(f_handler.getSingleFavourite(key)).toBe(value);
+});
+
+// Test that the removeFromFavourites function returns successfully
 test('remove from favourites list', () => {
+  let key = 'test4';
+  let value = 'value4'
 
-  expect().toBe();
+  f_handler.addToFavourites(key, value);
+  expect(f_handler.getSingleFavourite(key)).toBe(value);
+  expect(f_handler.removeFromFavourites(key)).toHaveReturned();
 });
 
-test('remove last item from favourites list', () => {
-
-  expect().toBe();
-});
-
+// Test that searching for unadded favourite returns nothing
 test('item not found in favourites list', () => {
+  let key = 'test5';
 
-  expect().toBe()
+  expect(f_handler.getSingleFavourite(key)).toHaveReturned();
 });
