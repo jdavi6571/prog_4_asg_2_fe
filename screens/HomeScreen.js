@@ -12,6 +12,7 @@ import {
 import CryptoListItem from '../components/CryptoListItem';
 import { WebBrowser } from 'expo';
 import styles from '../styles/MainStyles';
+import coinData from '../data/CoinData';
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
@@ -24,12 +25,7 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <FlatList
-            data={[
-              {
-                marketName: 'BTC',
-                name: 'BitCoin'
-              }
-            ]}
+            data={coinData}
             renderItem={({item}) => <CryptoListItem key={item.marketName} itemData={item} />}
           />
           {/*<View style={styles.welcomeContainer}>

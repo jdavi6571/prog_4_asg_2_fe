@@ -20,12 +20,20 @@ export default class CryptoListItem extends React.Component {
               source={require('../assets/images/robot-dev.png')}
               resizeMode="contain"
               fadeDuration={0}
-              style={{ width: 20, height: 20, marginTop: 1 }}
+              style={{ width: 30, height: 30, marginTop: 3 }}
             />
           </View>
           <View style={styles.optionTextContainer}>
             <Text style={styles.optionText}>
               {itemData.name}
+            </Text>
+            <Text style={styles.optionSubText}>
+              {itemData.marketName}
+            </Text>
+          </View>
+          <View style={styles.valueTextContainer}>
+            <Text style={styles.optionDollarText}>
+              {itemData.currentDollarValue}
             </Text>
           </View>
         </View>
@@ -38,6 +46,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
+  },
+  valueTextContainer: {
+    flex: 1,
+    alignItems: 'flex-end'
   },
   optionsTitleText: {
     fontSize: 16,
@@ -57,6 +69,14 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 15,
+    marginTop: 1,
+  },
+  optionDollarText: {
+    fontSize: 15,
+  },
+  optionSubText: {
+    fontSize: 10,
+    color: 'rgba(96,100,109, 1)',
     marginTop: 1,
   },
 });
