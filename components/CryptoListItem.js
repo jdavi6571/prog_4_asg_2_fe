@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image, Text, View } from 'react-native';
+import { StyleSheet, Image, Text, View, Button } from 'react-native';
 import { WebBrowser } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import Touchable from 'react-native-platform-touchable';
@@ -17,7 +17,7 @@ export default class CryptoListItem extends React.Component {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.optionIconContainer}>
             <Image
-              source={require('../assets/images/robot-dev.png')}
+              source={itemData.logo}
               resizeMode="contain"
               fadeDuration={0}
               style={{ width: 30, height: 30, marginTop: 3 }}
@@ -35,6 +35,9 @@ export default class CryptoListItem extends React.Component {
             <Text style={styles.optionDollarText}>
               {itemData.currentDollarValue}
             </Text>
+            <Button
+              title="Favourite"
+            />
           </View>
         </View>
       </Touchable>
