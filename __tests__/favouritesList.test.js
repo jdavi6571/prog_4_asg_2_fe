@@ -8,9 +8,7 @@ test('add to favourites list', () => {
   let key = 'test';
   let value = 'value'
 
-  f_handler.addToFavourites(key, value);
-
-  expect(f_handler.addToFavourites()).toBe(true);
+  expect(f_handler.addToFavourites(key, value)).toBe(true);
 });
 
 // Test that getSingleFavourite returns successfully (doesn't throw an error)
@@ -18,7 +16,9 @@ test('find some token', () => {
   let key = 'test2';
   let value = 'value2'
 
-  f_handler.addToFavourites(key, value);
+  f_handler.addToFavourites(key, value).then(function(res) {
+    console.log(res);
+  });
 
   expect(f_handler.getSingleFavourite(key)).toBeDefined();
 });
@@ -30,7 +30,11 @@ test('find item in favourites list', () => {
 
   f_handler.addToFavourites(key, value)
 
-  expect(f_handler.getSingleFavourite(key)).toBe(value);
+  f_handler.getSingleFavourite(key).then(function(result) {
+    console.log(result);
+  });
+
+  expect(f_handler.getSingleFavourite(key)).resolves.toBe(value);
 });
 
 // Test that the removeFromFavourites function returns successfully
@@ -46,5 +50,19 @@ test('remove from favourites list', () => {
 test('item not found in favourites list', () => {
   let key = 'test5';
 
-  expect(f_handler.getSingleFavourite(key)).toBe(false);
+  expect(f_handler.getSingleFavourite(key)).resolves.toBe(false);
+});
+
+test ('get all favourites in list', () => {
+  let key = 'test6';
+  let value = 'value6'
+
+  f_handler.addToFavourites(key, value);
+  f_handler.getSingleFavourite(key).then(function(result){
+    console.log(result);
+  });
+
+  f_handler.getAllFavourites().then(function(result){
+    console.log(result);
+  });
 });

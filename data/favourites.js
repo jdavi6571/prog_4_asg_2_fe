@@ -1,5 +1,7 @@
 /* Handler for favourites list */
 
+import { AsyncStorage } from "react-native";
+
 /*
 * Add a value to the favourites list
 * Will check to make sure given key is not used
@@ -7,10 +9,11 @@
 * @param value value to be added to favourites
 * @return returns true if successful, false otherwise
 */
-export function addToFavourites(key, value) {
+export async function addToFavourites(key, value) {
   try {
     if (checkIfInFavourites(key)) {
-      return true;
+      let response = await AsyncStorage.setItem(key, value);
+      return response;
     }
   }
   catch (error) {
@@ -23,14 +26,17 @@ export function addToFavourites(key, value) {
 * @param key key to search for
 * @return returns corresponding value if successful, false otherwise
 */
-export function getSingleFavourite(key) {
+export async function getSingleFavourite(key) {
   try {
-      if (checkIfInFavourites(key)) {
-      return "value3";
-    }
-    else {
-      throw Error;
-    }
+      if (checkIfInFavourites(key) ) {
+        const item = await AsyncStorage.getItem(key);
+        item.then(function(response) {
+          return response;
+        });
+      }
+      else {
+        throw Error;
+      }
   }
   catch (error) {
     return false;
@@ -42,10 +48,11 @@ export function getSingleFavourite(key) {
 * @param key key to search for
 * @return returns true if successful, false otherwise
 */
-export function removeFromFavourites(key) {
+export async function removeFromFavourites(key) {
   try {
     if (checkIfInFavourites(key)) {
-      return true;
+        await AsyncStorage.removeItem(key);
+        return true;
     }
     else {
       throw Error;
@@ -74,6 +81,6 @@ export function checkIfInFavourites(key) {
 * Returns all favourites in list
 * @return all favourites
 */
-export function getAllFavourites() {
-  return "";
+export async function getAllFavourites() {
+  return await AsyncStorage.getAllKeys();
 }
