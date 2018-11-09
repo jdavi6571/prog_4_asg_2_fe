@@ -26,7 +26,7 @@ export default class HomeScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <FlatList
             data={coinData}
-            renderItem={({item}) => <CryptoListItem key={item.marketName} itemData={item} />}
+            renderItem={({item}) => <CryptoListItem key={item.marketName} itemData={item}/>}
           />
           {/*<View style={styles.welcomeContainer}>
             <Image

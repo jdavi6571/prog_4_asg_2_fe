@@ -6,13 +6,26 @@ import { Ionicons } from '@expo/vector-icons';
 import Touchable from 'react-native-platform-touchable';
 import mainStyles from '../styles/MainStyles';
 
+import { NavigationActions, withNavigation } from 'react-navigation';
 
-export default class CryptoListItem extends React.Component {
+
+
+export default withNavigation(class CryptoListItem extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {favourited: false};
     this.handleToggleClick = this.handleToggleClick.bind(this);
+  }
+
+  RouteToDetailView = data => () => {
+    const navigateToDetail = NavigationActions.navigate({
+      routeName: 'MoreDetails',
+      params: {itemData: data},
+      action: NavigationActions.navigate({ routeName: 'MoreDetails' }),
+    });
+
+    this.props.navigation.dispatch(navigateToDetail);
   }
 
   handleToggleClick() {
@@ -27,7 +40,7 @@ export default class CryptoListItem extends React.Component {
       <Touchable
         style={styles.rowContainer}
         background={Touchable.Ripple('#ccc', false)}>
-        <View style={{ flexDirection: 'row', paddingTop: 12}}>
+        <View style={{ flexDirection: 'row', paddingTop: 12}} >
           <View style={styles.iconContainer}>
             <Image
               source={itemData.logo}
@@ -37,7 +50,7 @@ export default class CryptoListItem extends React.Component {
             />
           </View>
           <View style={styles.container}>
-            <Text style={styles.nameText}>
+            <Text style={styles.nameText} onPress={this.RouteToDetailView(itemData)}>
               {itemData.name}
             </Text>
             <Text style={styles.subText}>
@@ -61,7 +74,7 @@ export default class CryptoListItem extends React.Component {
       </Touchable>
     );
   }
-}
+});
 
 const styles = StyleSheet.create({
   container: {
