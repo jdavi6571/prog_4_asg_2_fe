@@ -17,7 +17,14 @@ import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Trending CryptoCoins',
+    title: 'Trending Coins',
+    headerStyle: {
+      backgroundColor: '#4CAF50',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
   };
 
   render() {
