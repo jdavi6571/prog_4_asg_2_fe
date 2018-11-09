@@ -1,14 +1,17 @@
 /*
 * Tests created for TDD of building favourites list
 */
-import * as f_handler from '../data/favourites.js';
+import * as f_handler from '../procedures/favourites_handler.js';
+
 
 // Test that addToFavourites function returns successfully
 test('add to favourites list', () => {
   let key = 'test';
   let value = 'value'
 
-  expect(f_handler.addToFavourites(key, value)).toBe(true);
+  return f_handler.addToFavourites(key, value).then(function(data) {
+    expect(data).toBeNull();
+  });
 });
 
 // Test that getSingleFavourite returns successfully (doesn't throw an error)
@@ -16,41 +19,49 @@ test('find some token', () => {
   let key = 'test2';
   let value = 'value2'
 
-  f_handler.addToFavourites(key, value).then(function(res) {
-    console.log(res);
-  });
+  expect.assertions(1);
 
-  expect(f_handler.getSingleFavourite(key)).toBeDefined();
+  f_handler.addToFavourites(key, value);
+
+   return f_handler.getSingleFavourite(key).then(function(data) {
+     expect(data).not.toBeNull();
+   });
 });
 
 // Test that getSingleFavourite returns the desired value
-test('find item in favourites list', () => {
+test('find item in favourites list', async () => {
   let key = 'test3';
   let value = 'value3'
 
-  f_handler.addToFavourites(key, value)
+  console.log(key + ":" + value);
 
-  f_handler.getSingleFavourite(key).then(function(result) {
-    console.log(result);
+  expect.assertions(1);
+
+  let temp = await f_handler.addToFavourites(key, value);
+
+  return f_handler.getSingleFavourite(key).then(function(data) {
+    expect(data).toEqual(value);
   });
-
-  expect(f_handler.getSingleFavourite(key)).resolves.toBe(value);
 });
-
+/*
 // Test that the removeFromFavourites function returns successfully
 test('remove from favourites list', () => {
   let key = 'test4';
   let value = 'value4'
 
+  expect.assertions(1);
+
   f_handler.addToFavourites(key, value);
-  expect(f_handler.removeFromFavourites(key)).toBe(true);
+  return f_handler.removeFromFavourites(key).then(function(data) {
+    expect(data).toBeNull();
+  };
 });
 
 // Test that searching for unadded favourite returns nothing
 test('item not found in favourites list', () => {
   let key = 'test5';
 
-  expect(f_handler.getSingleFavourite(key)).resolves.toBe(false);
+  return f_handler.checkIfInFavourites(key).toBe(false);
 });
 
 test ('get all favourites in list', () => {
@@ -58,11 +69,10 @@ test ('get all favourites in list', () => {
   let value = 'value6'
 
   f_handler.addToFavourites(key, value);
-  f_handler.getSingleFavourite(key).then(function(result){
-    console.log(result);
-  });
 
-  f_handler.getAllFavourites().then(function(result){
-    console.log(result);
+
+  return f_handler.getAllFavourites().then(function(data){
+    expect(data).toEqual();
   });
 });
+*/
