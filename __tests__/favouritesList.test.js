@@ -1,6 +1,7 @@
 /*
 * Tests created for TDD of building favourites list
 */
+import React from 'react';
 import * as f_handler from '../procedures/favourites_handler.js';
 
 

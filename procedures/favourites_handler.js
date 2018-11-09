@@ -11,7 +11,7 @@ import { AsyncStorage } from 'react-native';
 export async function addToFavourites(key, value) {
   try {
     if (!checkIfInFavourites(key)) {
-        return await AsyncStorage.setItem('one', 'found1');
+        return await AsyncStorage.setItem(key, value);
     }
     else {
       throw Error("Did not find in favourites");
@@ -30,7 +30,7 @@ export async function addToFavourites(key, value) {
 export async function getSingleFavourite(key) {
   try {
       if (!checkIfInFavourites(key) ) {
-        let item = await AsyncStorage.getItem('one');
+        let item = await AsyncStorage.getItem(key);
           if (item !== null) {
               return item;
           }
