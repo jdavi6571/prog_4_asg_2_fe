@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Image, Text, View, Button } from 'react-native';
+import { StyleSheet, Image, Text, View } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 import { WebBrowser } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import Touchable from 'react-native-platform-touchable';
@@ -35,9 +36,14 @@ export default class CryptoListItem extends React.Component {
             <Text style={styles.optionDollarText}>
               {itemData.currentDollarValue}
             </Text>
-            <Button
-              title="Favourite"
-            />
+            <Icon
+              raised
+              name='bookmark-o'
+              type='font-awesome'
+              color='#616161'
+              size={12}
+              onPress={() => console.log('hello')} />
+
           </View>
         </View>
       </Touchable>
