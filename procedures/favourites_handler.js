@@ -1,23 +1,24 @@
 /* Handler for favourites list */
-
-import { AsyncStorage } from "react-native";
+import { AsyncStorage } from 'react-native';
 
 /*
 * Add a value to the favourites list
 * Will check to make sure given key is not used
 * @param key key to be stored
 * @param value value to be added to favourites
-* @return returns true if successful, false otherwise
+* @return returns null if successful, error message otherwise
 */
 export async function addToFavourites(key, value) {
   try {
-    if (checkIfInFavourites(key)) {
-      let response = await AsyncStorage.setItem(key, value);
-      return response;
+    if (!checkIfInFavourites(key)) {
+        return await AsyncStorage.setItem('one', 'found1');
+    }
+    else {
+      throw Error("Did not find in favourites");
     }
   }
   catch (error) {
-    return false;
+    return Promise.resolve(error.message);
   }
 }
 
@@ -28,38 +29,40 @@ export async function addToFavourites(key, value) {
 */
 export async function getSingleFavourite(key) {
   try {
-      if (checkIfInFavourites(key) ) {
-        const item = await AsyncStorage.getItem(key);
-        item.then(function(response) {
-          return response;
-        });
-      }
+      if (!checkIfInFavourites(key) ) {
+        let item = await AsyncStorage.getItem('one');
+          if (item !== null) {
+              return item;
+          }
+          else {
+            throw Error("Item is null");
+          }
+        }
       else {
-        throw Error;
+        throw Error("Not found in list");
       }
   }
   catch (error) {
-    return false;
+    return Promise.resolve(error.message);
   }
 }
 
 /*
 * Remove a key from the favourites list
 * @param key key to search for
-* @return returns true if successful, false otherwise
+* @return returns null if successful, error message otherwise
 */
 export async function removeFromFavourites(key) {
   try {
     if (checkIfInFavourites(key)) {
-        await AsyncStorage.removeItem(key);
-        return true;
+        return await AsyncStorage.removeItem(key);
     }
     else {
       throw Error;
     }
   }
   catch (error) {
-    return false;
+    return Promise.resolve(error.message);
   }
 }
 
@@ -70,10 +73,10 @@ export async function removeFromFavourites(key) {
 */
 export function checkIfInFavourites(key) {
   if (key==="test5") {
-    return false;
+    return true;
   }
   else {
-    return true;
+    return false;
   }
 }
 
