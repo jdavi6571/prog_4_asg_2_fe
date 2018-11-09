@@ -40,7 +40,7 @@ export default class HomeScreen extends React.Component {
       </View>
     );
   }
-
+/*
   _maybeRenderDevelopmentModeWarning() {
     if (__DEV__) {
       const learnMoreButton = (
@@ -72,5 +72,5 @@ export default class HomeScreen extends React.Component {
     WebBrowser.openBrowserAsync(
       'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
     );
-  };
+  };*/
 }

@@ -1,9 +1,9 @@
 {
   "expo": {
     "name": "Cryptocurrency App",
-    "description": "A very interesting project.",
+    "description": "Douglas Chung, Joel Davies, and Joshua Sturgeon",
     "slug": "A COMP 3504 Project",
-    "authors": "Douglas Chung, Joel Davies, and Joshua Sturgeon",
+    "privacy": "private",
     "sdkVersion": "30.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.0",

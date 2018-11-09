@@ -38,9 +38,9 @@ export default class MoreDetails extends React.Component {
 
 
     return (
-      <Card title="CRYPTO STUFF">
+      <Card title={itemData.name}>
         <Text>
-          {JSON.stringify(itemData, null, 2)}
+          Current Price: {itemData.currentDollarValue}
         </Text>
         <View onLayout={this.onLayout}>
           {this.state.initialized &&
