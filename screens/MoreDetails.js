@@ -34,16 +34,13 @@ export default class MoreDetails extends React.Component {
       Math.random() * 5
     ].map(randomValue =>
       parsed + randomValue
-    );
-
-    fakeValues.push(parsed);
+    ).concat(parsed);
 
 
     return (
-      <Card>
-        <Text>{currentPrice} : {parsed}</Text>
+      <Card title="CRYPTO STUFF">
         <Text>
-          {JSON.stringify(this.props.navigation.state.params.itemData, null, 2)}
+          {JSON.stringify(itemData, null, 2)}
         </Text>
         <View onLayout={this.onLayout}>
           {this.state.initialized &&

@@ -14,13 +14,9 @@ export default withNavigation(class CryptoListItem extends React.Component {
 
   constructor(props) {
     super(props);
-    if (this._retrieveData() == true) {
-      this.state = {favourited: true};
-    } else {
-      this.state = {favourited: false};
-    }
 
-    this.handleToggleClick = this.handleToggleClick.bind(this);
+    this.state = {loaded: false, favourited: false};
+    this._retrieveData();
   }
 
   _storeData = async () => {
@@ -41,14 +37,16 @@ export default withNavigation(class CryptoListItem extends React.Component {
 
   _retrieveData = async () => {
     try {
+      const newState = {loaded: true};
       const value = await AsyncStorage.getItem(this.props.itemData.marketName);
       if (value !== null) {
         // We have data!!
         console.log(value);
-        return true;
+        newState.favourited = true;
       } else {
-        return false;
+        newState.favourited = false;
       }
+      this.setState(newState);
      } catch (error) {
        // Error retrieving data
      }
@@ -64,11 +62,11 @@ export default withNavigation(class CryptoListItem extends React.Component {
     this.props.navigation.dispatch(navigateToDetail);
   }
 
-  handleToggleClick() {
+  handleToggleClick = () => {
     this.setState(state => ({
       favourited: !state.favourited
     }));
-    this.state.favourited ?   this._removeData() : this._storeData();
+    this.state.favourited ? this._removeData() : this._storeData();
   }
   render() {
     const itemData = this.props.itemData;
@@ -100,14 +98,15 @@ export default withNavigation(class CryptoListItem extends React.Component {
             <Text style={styles.dollarText}>
               {itemData.currentDollarValue}
             </Text>
-            <Icon
-              raised
-              name=  {this.state.favourited ? 'bookmark' : 'bookmark-o'}
-              type='font-awesome'
-              color= {this.state.favourited ? '#43A047' : '#616161'}
-              size={12}
-              onPress={this.handleToggleClick} />
-
+            {this.state.loaded &&
+              <Icon
+                raised
+                name=  {this.state.favourited ? 'bookmark' : 'bookmark-o'}
+                type='font-awesome'
+                color= {this.state.favourited ? '#43A047' : '#616161'}
+                size={12}
+                onPress={this.handleToggleClick} />
+            }
           </View>
         </View>
       </Touchable>
