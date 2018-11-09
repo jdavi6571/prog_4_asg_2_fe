@@ -39,7 +39,9 @@ export default withNavigation(class CryptoListItem extends React.Component {
     return (
       <Touchable
         style={styles.rowContainer}
-        background={Touchable.Ripple('#ccc', false)}>
+        background={Touchable.Ripple('#ccc', false)}
+        onPress={this.RouteToDetailView(itemData)}>
+
         <View style={{ flexDirection: 'row', paddingTop: 12}} >
           <View style={styles.iconContainer}>
             <Image
@@ -50,7 +52,7 @@ export default withNavigation(class CryptoListItem extends React.Component {
             />
           </View>
           <View style={styles.container}>
-            <Text style={styles.nameText} onPress={this.RouteToDetailView(itemData)}>
+            <Text style={styles.nameText}>
               {itemData.name}
             </Text>
             <Text style={styles.subText}>
