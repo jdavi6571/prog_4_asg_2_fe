@@ -8,41 +8,53 @@ import mainStyles from '../styles/MainStyles';
 
 
 export default class CryptoListItem extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {favourited: false};
+    this.handleToggleClick = this.handleToggleClick.bind(this);
+  }
+
+  handleToggleClick() {
+    this.setState(state => ({
+      favourited: !state.favourited
+    }));
+  }
   render() {
     const itemData = this.props.itemData;
 
     return (
       <Touchable
-        style={styles.option}
+        style={styles.rowContainer}
         background={Touchable.Ripple('#ccc', false)}>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={styles.optionIconContainer}>
+        <View style={{ flexDirection: 'row', paddingTop: 12}}>
+          <View style={styles.iconContainer}>
             <Image
               source={itemData.logo}
               resizeMode="contain"
               fadeDuration={0}
-              style={{ width: 30, height: 30, marginTop: 3 }}
+              style={{ width: 40, height: 40, marginTop: 3 }}
             />
           </View>
-          <View style={styles.optionTextContainer}>
-            <Text style={styles.optionText}>
+          <View style={styles.container}>
+            <Text style={styles.nameText}>
               {itemData.name}
             </Text>
-            <Text style={styles.optionSubText}>
+            <Text style={styles.subText}>
               {itemData.marketName}
             </Text>
           </View>
           <View style={styles.valueTextContainer}>
-            <Text style={styles.optionDollarText}>
+            <Text style={styles.dollarText}>
               {itemData.currentDollarValue}
             </Text>
             <Icon
               raised
-              name='bookmark-o'
+              name=  {this.state.favourited ? 'bookmark' : 'bookmark-o'}
               type='font-awesome'
               color='#616161'
               size={12}
-              onPress={() => console.log('hello')} />
+              onPress={this.handleToggleClick} />
 
           </View>
         </View>
@@ -54,37 +66,30 @@ export default class CryptoListItem extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
   },
   valueTextContainer: {
     flex: 1,
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
+    marginRight:15,
   },
-  optionsTitleText: {
-    fontSize: 16,
-    marginLeft: 15,
-    marginTop: 9,
-    marginBottom: 12,
-  },
-  optionIconContainer: {
+  iconContainer: {
     marginRight: 9,
+    marginLeft: 9,
   },
-  option: {
+  rowContainer: {
     backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EDEDED',
   },
-  optionText: {
-    fontSize: 15,
+  nameText: {
+    fontSize: 17,
     marginTop: 1,
   },
-  optionDollarText: {
+  dollarText: {
     fontSize: 15,
   },
-  optionSubText: {
-    fontSize: 10,
+  subText: {
+    fontSize: 12,
     color: 'rgba(96,100,109, 1)',
     marginTop: 1,
   },
