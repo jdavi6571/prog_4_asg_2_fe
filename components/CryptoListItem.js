@@ -65,7 +65,7 @@ export default withNavigation(class CryptoListItem extends React.Component {
               raised
               name=  {this.state.favourited ? 'bookmark' : 'bookmark-o'}
               type='font-awesome'
-              color='#616161'
+              color= {this.state.favourited ? '#43A047' : '#616161'}
               size={12}
               onPress={this.handleToggleClick} />
 
