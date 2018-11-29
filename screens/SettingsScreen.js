@@ -1,14 +1,15 @@
 import React from 'react';
-import { ExpoConfigView } from '@expo/samples';
+//import { ExpoConfigView } from '@expo/samples';
+import Converter from "../procedures/CoinConverter.js";
 
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
-    title: 'app.json',
+    title: 'Coin Converter - Test',
   };
 
   render() {
-    /* Go ahead and delete ExpoConfigView and replace it with your
-     * content, we just wanted to give you a quick view of your config */
-    return <ExpoConfigView />;
+    return (
+      <Converter />
+    );
   }
 }
