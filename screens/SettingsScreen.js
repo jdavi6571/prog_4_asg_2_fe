@@ -9,7 +9,7 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return (
-      <Converter />
+      <Converter conversionRate='1.05'/>
     );
   }
 }
