@@ -68,51 +68,62 @@ export default withNavigation(class CryptoListItem extends React.Component {
     }));
     this.state.favourited ? this._removeData() : this._storeData();
   }
+
   render() {
     const itemData = this.props.itemData;
+    let listItem;
 
+    if (this.props.filtered == true && this.state.favourited == false) {
+      listItem = null;
+    }
+    else {
+      listItem =
+        <Touchable
+          style={styles.rowContainer}
+          background={Touchable.Ripple('#ccc', false)}
+          onPress={this.RouteToDetailView(itemData)}>
+
+          <View style={{ flexDirection: 'row', paddingTop: 12}} >
+            <View style={styles.iconContainer}>
+              <Image
+                source={itemData.logo}
+                resizeMode="contain"
+                fadeDuration={0}
+                style={{ width: 40, height: 40, marginTop: 3 }}
+              />
+            </View>
+            <View style={styles.container}>
+              <Text style={styles.nameText}>
+                {itemData.name}
+              </Text>
+              <Text style={styles.subText}>
+                {itemData.marketName}
+              </Text>
+            </View>
+            <View style={styles.valueTextContainer}>
+              <Text style={styles.dollarText}>
+                {itemData.currentDollarValue}
+              </Text>
+              {this.state.loaded &&
+                <Icon
+                  raised
+                  name=  {this.state.favourited ? 'bookmark' : 'bookmark-o'}
+                  type='font-awesome'
+                  color= {this.state.favourited ? '#43A047' : '#616161'}
+                  size={16}
+                  onPress={this.handleToggleClick} />
+              }
+            </View>
+          </View>
+        </Touchable>;
+    }
     return (
-      <Touchable
-        style={styles.rowContainer}
-        background={Touchable.Ripple('#ccc', false)}
-        onPress={this.RouteToDetailView(itemData)}>
-
-        <View style={{ flexDirection: 'row', paddingTop: 12}} >
-          <View style={styles.iconContainer}>
-            <Image
-              source={itemData.logo}
-              resizeMode="contain"
-              fadeDuration={0}
-              style={{ width: 40, height: 40, marginTop: 3 }}
-            />
-          </View>
-          <View style={styles.container}>
-            <Text style={styles.nameText}>
-              {itemData.name}
-            </Text>
-            <Text style={styles.subText}>
-              {itemData.marketName}
-            </Text>
-          </View>
-          <View style={styles.valueTextContainer}>
-            <Text style={styles.dollarText}>
-              {itemData.currentDollarValue}
-            </Text>
-            {this.state.loaded &&
-              <Icon
-                raised
-                name=  {this.state.favourited ? 'bookmark' : 'bookmark-o'}
-                type='font-awesome'
-                color= {this.state.favourited ? '#43A047' : '#616161'}
-                size={12}
-                onPress={this.handleToggleClick} />
-            }
-          </View>
-        </View>
-      </Touchable>
+      <View>
+        {listItem}
+      </View>
     );
   }
-});
+})
 
 const styles = StyleSheet.create({
   container: {

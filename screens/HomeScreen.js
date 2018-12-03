@@ -7,8 +7,9 @@ import {
   Text,
   TouchableOpacity,
   View,
-  FlatList,
+  FlatList
 } from 'react-native';
+import { Icon } from 'react-native-elements';
 import CryptoListItem from '../components/CryptoListItem';
 import { WebBrowser } from 'expo';
 import styles from '../styles/MainStyles';
@@ -16,16 +17,57 @@ import coinData from '../data/CoinData';
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Trending Coins',
-    headerStyle: {
-      backgroundColor: '#4CAF50',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
+  constructor (props) {
+    super(props);
+
+    this.state = {filtered: false};
+  }
+
+  filterFavourites = () => {
+    this.setState(state => ({
+      filtered: !state.filtered
+    }));
+    this.props.navigation.setParams({ isFiltered: this.state.filtered });
+    this.render();
+  }
+
+  refreshList = () => {
+    alert("Refreshing list!");
+  }
+
+  static navigationOptions =  ({ navigation}) => {
+    return {
+      headerTitle:
+      <View style={{flexDirection: 'row'}}>
+        <View style={homeScreenStyles.iconContainer}>
+          <Icon
+            name='refresh'
+            type='font-awesome'
+            style={{color: 'white'}}
+            onPress={navigation.getParam('refresh')} />
+        </View>
+        <Text style={homeScreenStyles.headerTitle}>Trending Cryptocoins</Text>
+        <View style={homeScreenStyles.iconContainer}>
+          <Icon
+            name={navigation.getParam('isFiltered') ? 'filter' : 'filter-outline'}
+            type='material-community'
+            style={{color: 'white'}}
+            onPress={navigation.getParam('filter')}/>
+        </View>
+      </View>,
+      headerStyle: {
+        backgroundColor: '#4CAF50',
+      }
+    }
+
   };
+
+  componentDidMount() {
+    this.props.navigation.setParams({
+      refresh: this.refreshList,
+      filter: this.filterFavourites,
+      isFiltered: this.state.filtered});
+  }
 
   render() {
     return (
@@ -33,44 +75,28 @@ export default class HomeScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <FlatList
             data={coinData}
-            renderItem={({item}) => <CryptoListItem key={item.marketName} itemData={item} />}
+            extraData={this.state}
+            renderItem={({item}) => <CryptoListItem key={item.marketName} itemData={item} filtered={this.state.filtered} />}
             keyExtractor={(item, index) => index.toString()}
           />
         </ScrollView>
       </View>
     );
   }
-/*
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
 
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };*/
 }
+
+const homeScreenStyles = StyleSheet.create({
+  iconContainer: {
+    flex: 1,
+    marginRight: 9,
+    marginLeft: 9,
+  },
+  headerTitle: {
+    flex: 3,
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16
+  }
+});
