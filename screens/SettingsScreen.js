@@ -6,26 +6,38 @@ export default class SettingsScreen extends React.Component {
   constructor (props) {
     super(props);
 
-    this.loadDetails();
+    this.state = {
+      name: '',
+      changePct: 0,
+      volume24: 0
+    };
+
+    this.getSingleDetails();
   }
 
   static navigationOptions = {
     title: 'Coin Converter - Test',
   };
 
-  loadDetails = async () => {
-    try {
-      var temp = await getSingleDetails();
+  getSingleDetails() {
+    var coinID = 'BTC';
+    fetch('https://min-api.cryptocompare.com/data/pricemultifull?fsyms='+coinID+'&tsyms=CDN&api_key=584fd3b43d00f3e846f51724756eed798b5814d35ce60374a210dd2277baeb48')
+      .then((response) => response.json() )
+      .then((responseJSON) => {
+        alert(JSON.stringify(
+          eval('responseJSON.RAW.'+coinID+'.CDN')
+        ));
+        var results = eval('responseJSON.RAW.'+coinID+'.CDN');
 
-      if (temp !== null) {
-        alert(temp);
-        this.setState(temp);
-      }
-    }
-    catch (error) {
-      alert(error);
-    }
+        this.setState({
+          name: results.FROMSYMBOL,
+          changePct: results.CHANGEPCT24HOUR,
+          volume24: results.TOTALVOLUME24H
+        });
+      })
+      .catch((error) => console.log(error) );
   }
+
 
   render() {
     return (
@@ -34,6 +46,9 @@ export default class SettingsScreen extends React.Component {
           <Text>
             Nothing to see here!
           </Text>
+          <Text>{this.state.name}</Text>
+          <Text>{this.state.changePct}</Text>
+          <Text>{this.state.volume24}</Text>
         </View>
       </View>
 

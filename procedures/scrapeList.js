@@ -18,14 +18,3 @@ export function getList(){
 
   return currencyDetails;
 }
-
-export function getSingleDetails() {
-  var coinID = 'BTC';
-  var details = fetch('https://min-api.cryptocompare.com/data/pricemultifull?fsyms='+coinID+'&tsyms=CDN&api_key=584fd3b43d00f3e846f51724756eed798b5814d35ce60374a210dd2277baeb48')
-    .then((response) => response.json() )
-    .then((responseJSON) => {
-      alert(responseJSON.RAW.BTC.CDN.FROMSYMBOL);
-      return responseJSON.RAW.BTC.CDN;
-    })
-    .catch((error) => console.log(error) );
-}
