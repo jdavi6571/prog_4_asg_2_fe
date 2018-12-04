@@ -13,7 +13,7 @@ export default class MoreDetails extends React.Component {
       price: 0,
       changePct: 0,
       volume24: 0,
-      tempConversionRate: 1.05
+      marketCap: 0
     };
     this.getSingleDetails();
   }
@@ -39,7 +39,8 @@ export default class MoreDetails extends React.Component {
           coinID: id,
           price: results.PRICE,
           changePct: results.CHANGEPCT24HOUR.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
-          volume24: results.TOTALVOLUME24H.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+          volume24: results.TOTALVOLUME24H.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+          marketCap: results.MKTCAP.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
         });
       })
       .catch((error) => console.log(error) );
@@ -61,11 +62,11 @@ export default class MoreDetails extends React.Component {
               </View>
               <View style={{flexDirection: 'row'}}>
                 <Text style={styles.detailHeader}>Volume</Text>
-                <Text style={styles.detailHeader}>Other</Text>
+                <Text style={styles.detailHeader}>Market Cap</Text>
               </View>
               <View style={{flexDirection: 'row'}}>
                 <Text style={styles.detailData}>{this.state.volume24}</Text>
-                <Text style={styles.detailData}>???</Text>
+                <Text style={styles.detailData}>${this.state.marketCap}</Text>
               </View>
             </View>
           </View>
