@@ -43,7 +43,7 @@ export default class Converter extends React.Component {
             />
         </View>
         <View style={styles.row} >
-          <Text style={styles.label}>$CDN</Text>
+          <Text style={styles.label}>$CAD</Text>
           <TextInput
             style={styles.numberField}
             keyboardType="numeric"

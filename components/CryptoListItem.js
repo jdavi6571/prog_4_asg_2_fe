@@ -21,7 +21,7 @@ export default withNavigation(class CryptoListItem extends React.Component {
 
   _storeData = async () => {
     try {
-      await AsyncStorage.setItem(this.props.itemData.marketName, this.props.itemData.marketName);
+      await AsyncStorage.setItem(this.props.marketKey, this.props.marketKey);
     } catch (error) {
       // Error saving data
     }
@@ -29,7 +29,7 @@ export default withNavigation(class CryptoListItem extends React.Component {
 
   _removeData = async () => {
     try {
-      await AsyncStorage.removeItem(this.props.itemData.marketName);
+      await AsyncStorage.removeItem(this.props.marketKey);
     } catch (error) {
       // Error saving data
     }
@@ -38,7 +38,7 @@ export default withNavigation(class CryptoListItem extends React.Component {
   _retrieveData = async () => {
     try {
       const newState = {loaded: true};
-      const value = await AsyncStorage.getItem(this.props.itemData.marketName);
+      const value = await AsyncStorage.getItem(this.props.marketKey);
       if (value !== null) {
         // We have data!!
         console.log(value);
@@ -55,7 +55,7 @@ export default withNavigation(class CryptoListItem extends React.Component {
   RouteToDetailView = data => () => {
     const navigateToDetail = NavigationActions.navigate({
       routeName: 'MoreDetails',
-      params: {itemData: data},
+      params: {marketKey: data},
       action: NavigationActions.navigate({ routeName: 'MoreDetails' }),
     });
 
@@ -70,7 +70,6 @@ export default withNavigation(class CryptoListItem extends React.Component {
   }
 
   render() {
-    const itemData = this.props.itemData;
     let listItem;
 
     if (this.props.filtered == true && this.state.favourited == false) {
@@ -81,12 +80,12 @@ export default withNavigation(class CryptoListItem extends React.Component {
         <Touchable
           style={styles.rowContainer}
           background={Touchable.Ripple('#ccc', false)}
-          onPress={this.RouteToDetailView(itemData)}>
+          onPress={this.RouteToDetailView(this.props.marketKey)}>
 
           <View style={{ flexDirection: 'row', paddingTop: 12}} >
             <View style={styles.iconContainer}>
               <Image
-                source={itemData.logo}
+                source={require('../node_modules/cryptocurrency-icons/128/color/btc.png')}
                 resizeMode="contain"
                 fadeDuration={0}
                 style={{ width: 40, height: 40, marginTop: 3 }}
@@ -94,15 +93,15 @@ export default withNavigation(class CryptoListItem extends React.Component {
             </View>
             <View style={styles.container}>
               <Text style={styles.nameText}>
-                {itemData.name}
+                {this.props.marketKey}
               </Text>
               <Text style={styles.subText}>
-                {itemData.marketName}
+                {this.props.marketKey}
               </Text>
             </View>
             <View style={styles.valueTextContainer}>
               <Text style={styles.dollarText}>
-                {itemData.currentDollarValue}
+                {this.props.price}
               </Text>
               {this.state.loaded &&
                 <Icon

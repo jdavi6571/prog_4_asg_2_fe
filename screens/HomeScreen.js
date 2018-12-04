@@ -20,7 +20,8 @@ export default class HomeScreen extends React.Component {
   constructor (props) {
     super(props);
 
-    this.state = {filtered: false};
+    this.state = {filtered: false, coinData: coinData};
+    this.refreshList();
   }
 
   filterFavourites = () => {
@@ -32,7 +33,27 @@ export default class HomeScreen extends React.Component {
   }
 
   refreshList = () => {
-    alert("Refreshing list!");
+      this.state.coinData = [];
+
+      fetch('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,BCC,XRP,ETH,XLM,EOS&tsyms=CAD&api_key=584fd3b43d00f3e846f51724756eed798b5814d35ce60374a210dd2277baeb48')
+        .then((response) => response.json() )
+        .then((responseJSON) => {
+          var keys = Object.keys(responseJSON);
+          var tempName = keys[0];
+
+          var tempNum = 0;
+          var tempArray = [];
+          for (i=0; i<keys.length; i++) {
+            tempNum++;
+            var element = {
+              key: keys[i],
+              price: responseJSON[keys[i]].CAD,
+            }
+            this.state.coinData.push(element);  //alert(JSON.stringify(element));
+          }
+          this.setState({state: this.state});
+        })
+        .catch((error) => console.log(error) );
   }
 
   static navigationOptions =  ({ navigation}) => {
@@ -74,14 +95,15 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <FlatList
-            data={coinData}
+            data={this.state.coinData}
             extraData={this.state}
-            renderItem={({item}) => <CryptoListItem key={item.marketName} itemData={item} filtered={this.state.filtered} />}
+            renderItem={({item}) => <CryptoListItem marketKey={item.key} price={item.price} filtered={this.state.filtered} />}
             keyExtractor={(item, index) => index.toString()}
           />
         </ScrollView>
       </View>
     );
+    alert("After Return");
   }
 
 }
