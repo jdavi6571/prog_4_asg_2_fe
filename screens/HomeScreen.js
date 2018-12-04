@@ -49,7 +49,7 @@ export default class HomeScreen extends React.Component {
               key: keys[i],
               price: responseJSON[keys[i]].CAD,
             }
-            this.state.coinData.push(element);  //alert(JSON.stringify(element));
+            this.state.coinData.push(element);
           }
           this.setState({state: this.state});
         })
@@ -103,7 +103,6 @@ export default class HomeScreen extends React.Component {
         </ScrollView>
       </View>
     );
-    alert("After Return");
   }
 
 }
