@@ -85,7 +85,7 @@ export default withNavigation(class CryptoListItem extends React.Component {
           <View style={{ flexDirection: 'row', paddingTop: 12}} >
             <View style={styles.iconContainer}>
               <Image
-                source={require('../node_modules/cryptocurrency-icons/128/color/btc.png')}
+                source={this.props.logo}
                 resizeMode="contain"
                 fadeDuration={0}
                 style={{ width: 40, height: 40, marginTop: 3 }}

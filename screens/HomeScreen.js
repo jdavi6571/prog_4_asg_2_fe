@@ -35,19 +35,25 @@ export default class HomeScreen extends React.Component {
   refreshList = () => {
       this.state.coinData = [];
 
+    var imageLinks = {
+        'BTC': {logo: require('../node_modules/cryptocurrency-icons/128/color/btc.png')},
+        'BCC': {logo: require('../node_modules/cryptocurrency-icons/128/color/bcc.png')},
+        'XRP': {logo: require('../node_modules/cryptocurrency-icons/128/color/xrp.png')},
+        'ETH': {logo: require('../node_modules/cryptocurrency-icons/128/color/eth.png')},
+        'XLM': {logo: require('../node_modules/cryptocurrency-icons/128/color/xlm.png')},
+        'EOS': {logo: require('../node_modules/cryptocurrency-icons/128/color/eos.png')}
+      };
+
       fetch('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,BCC,XRP,ETH,XLM,EOS&tsyms=CAD&api_key=584fd3b43d00f3e846f51724756eed798b5814d35ce60374a210dd2277baeb48')
         .then((response) => response.json() )
         .then((responseJSON) => {
           var keys = Object.keys(responseJSON);
-          var tempName = keys[0];
 
-          var tempNum = 0;
-          var tempArray = [];
           for (i=0; i<keys.length; i++) {
-            tempNum++;
             var element = {
               key: keys[i],
               price: responseJSON[keys[i]].CAD,
+              logo: imageLinks[keys[i]].logo
             }
             this.state.coinData.push(element);
           }
@@ -97,7 +103,7 @@ export default class HomeScreen extends React.Component {
           <FlatList
             data={this.state.coinData}
             extraData={this.state}
-            renderItem={({item}) => <CryptoListItem marketKey={item.key} price={item.price} filtered={this.state.filtered} />}
+            renderItem={({item}) => <CryptoListItem marketKey={item.key} price={item.price} logo={item.logo} filtered={this.state.filtered} />}
             keyExtractor={(item, index) => index.toString()}
           />
         </ScrollView>
