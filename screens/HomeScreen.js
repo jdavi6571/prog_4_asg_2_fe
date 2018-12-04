@@ -52,7 +52,7 @@ export default class HomeScreen extends React.Component {
           for (i=0; i<keys.length; i++) {
             var element = {
               key: keys[i],
-              price: responseJSON[keys[i]].CAD,
+              price: responseJSON[keys[i]].CAD.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
               logo: imageLinks[keys[i]].logo
             }
             this.state.coinData.push(element);

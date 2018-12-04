@@ -101,7 +101,7 @@ export default withNavigation(class CryptoListItem extends React.Component {
             </View>
             <View style={styles.valueTextContainer}>
               <Text style={styles.dollarText}>
-                {this.props.price}
+                ${this.props.price}
               </Text>
               {this.state.loaded &&
                 <Icon

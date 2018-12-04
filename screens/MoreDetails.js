@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, Dimensions, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Card, ListItem, Button } from 'react-native-elements';
 import { LineChart } from 'react-native-chart-kit';
 import Converter from '../procedures/CoinConverter.js';
@@ -12,7 +12,8 @@ export default class MoreDetails extends React.Component {
       coinID: '',
       price: 0,
       changePct: 0,
-      volume24: 0
+      volume24: 0,
+      tempConversionRate: 1.05
     };
     this.getSingleDetails();
   }
@@ -36,7 +37,7 @@ export default class MoreDetails extends React.Component {
 
         this.setState({
           coinID: id,
-          price: results.PRICE.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+          price: results.PRICE,
           changePct: results.CHANGEPCT24HOUR.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
           volume24: results.TOTALVOLUME24H.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
         });
@@ -51,20 +52,20 @@ export default class MoreDetails extends React.Component {
           <View>
             <View>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{flex: '1'}}>Current Price</Text>
-                <Text style={{flex: '1'}}>Change %</Text>
+                <Text style={styles.detailHeader}>Current Price</Text>
+                <Text style={styles.detailHeader}>Change %</Text>
               </View>
               <View style={{ flexDirection: 'row'}}>
-                <Text style={{flex: '1'}}>${this.state.price}</Text>
-                <Text style={{flex: '1'}}>{this.state.changePct}%</Text>
+                <Text style={styles.detailData}>${this.state.price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') }</Text>
+                <Text style={styles.detailData}>{this.state.changePct}%</Text>
               </View>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{flex: '1'}}>Volume</Text>
-                <Text style={{flex: '1'}}>Other</Text>
+                <Text style={styles.detailHeader}>Volume</Text>
+                <Text style={styles.detailHeader}>Other</Text>
               </View>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{flex: '1'}}>{this.state.volume24}</Text>
-                <Text style={{flex: '1'}}>???</Text>
+                <Text style={styles.detailData}>{this.state.volume24}</Text>
+                <Text style={styles.detailData}>???</Text>
               </View>
             </View>
           </View>
@@ -76,6 +77,19 @@ export default class MoreDetails extends React.Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  detailHeader: {
+    flex: 1,
+    marginTop: 10,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
+  detailData: {
+    flex: 1,
+    textAlign: 'center'
+  }
+});
 
 /*
 const parsed = Number(this.state.price.replace(/[^0-9.-]+/g,""));

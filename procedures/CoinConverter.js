@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, TextInput } from 'react-native';
 export default class Converter extends React.Component {
   constructor (props) {
     super(props);
-    this.state= { coin: 0, currency: 0, conversionRate: this.props.conversionRate};
+    this.state= { coin: 0, currency: 0};
   };
 
   updateCoin = (text) => {
@@ -17,13 +17,13 @@ export default class Converter extends React.Component {
 
   convertCoinToCurrency = () => {
     this.setState({
-      currency: (this.state.coin * this.state.conversionRate).toFixed(2)
+      currency: (this.state.coin * this.props.conversionRate).toFixed(2)
     });
   };
 
   convertCurrencyToCoin = () => {
     this.setState({
-      coin: (this.state.currency / this.state.conversionRate).toFixed(2)
+      coin: (this.state.currency / this.props.conversionRate).toFixed(2)
     });
   };
 
